@@ -1,0 +1,7 @@
+{
+  "name": "Repr'Izy",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
