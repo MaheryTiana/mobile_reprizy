@@ -1,6 +1,6 @@
 import { IonButton, IonCard, IonCardContent, IonCardHeader, IonContent, IonFooter, IonHeader, IonInput, IonMenu, IonMenuButton, IonPage, IonTitle, IonToolbar } from "@ionic/react";
 // import  "../assets/css/Register.css";
-
+// import "../global.css";
 const Register: React.FC = () =>{
 
     return(
@@ -11,10 +11,8 @@ const Register: React.FC = () =>{
 
     <div>
      
-      <form action="/accueil" method="POST">
+      <form action="/accueil" method="POST" style={{marginTop:'20px'}}>
         
-        <br/>
-        <br/>
         <IonInput className="myinput" label="Nom" type="text"></IonInput>
         <IonInput className="myinput" label="Prenom" type="text"></IonInput> 
         <IonInput className="myinput" label="Date de naissance" type="date"></IonInput>    
@@ -22,9 +20,9 @@ const Register: React.FC = () =>{
         <IonInput className="myinput" label="Numero CIN" type="text"></IonInput>
         <IonInput style={{marginLeft:"10px"}} label="Email" type="email"></IonInput>
         <IonInput style={{marginLeft:"10px"}} label="Mot de passe" type="password"></IonInput>
-        <br/>
-        <center>
-            <IonButton routerLink="/accueil">S'inscrire</IonButton>
+        
+        <center style={{marginTop:'20px'}}>
+            <IonButton color={"tertiary"} routerLink="/accueil">S'inscrire</IonButton>
         </center>
 
       

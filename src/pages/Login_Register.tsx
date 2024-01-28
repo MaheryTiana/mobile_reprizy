@@ -1,6 +1,7 @@
 import { IonButton, IonCard, IonCardContent, IonCardHeader, IonContent, IonFooter, IonHeader, IonInput, IonMenu, IonMenuButton, IonPage, IonTitle, IonToolbar, useIonViewWillEnter } from "@ionic/react";
 import { useEffect, useState } from "react";
 import  "../assets/css/Login.css";
+import "../global.css";
 import Login from "../components/Login";
 import Register from "../components/Register";
 

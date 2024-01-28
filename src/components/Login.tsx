@@ -16,19 +16,14 @@ const Login: React.FC = () =>{
 
     <div>
      
-      <form 
-       action="/accueil" method="POST">
-        
-        <br/>
-        <br/>
+      <form action="/accueil" method="POST" style={{marginTop:'20px'}}>
 
         <IonInput style={{marginLeft:"10px"}} label="Email" type="email" placeholder="example@gmail.com"></IonInput>
-        <br/>
-        <br/>
-        <IonInput style={{marginLeft:"10px"}} label="Mot de passe" type="password" placeholder="8 characters"></IonInput>
-        <br/>
-        <center>
-            <IonButton routerLink="/accueil">Se connecter</IonButton>
+
+        <IonInput style={{marginLeft:"10px", top: "5px"}} label="Mot de passe" type="password" placeholder="8 characters"></IonInput>
+
+        <center style={{marginTop:'30px'}}>
+            <IonButton color={"tertiary"} routerLink="/accueil">Se connecter</IonButton>
         </center>
       
       </form>
