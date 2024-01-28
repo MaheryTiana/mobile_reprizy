@@ -20,7 +20,7 @@ export function Started() {
 
 
         <IonButton onClick={() => setShowModal(true)}
-         color={"danger"} id="open-modal" 
+         color={"tertiary"} id="open-modal" 
          expand="block">
             <p >commencer</p>
         </IonButton>
