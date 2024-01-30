@@ -71,3 +71,7 @@
   width: 60px;
   height: 40px;
   }
+
+  .form_title{
+    color:  var(--ion-color-tertiary);
+  }

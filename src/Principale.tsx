@@ -8,6 +8,8 @@ import { listCircleOutline, add,addCircleOutline,personCircleOutline,notificatio
 
 import  "./assets/css/menu.scss";
 import Accueil from "./pages/Accueil";
+import New_annonce from './pages/New_annonce';
+import Favoris from './pages/Favoris';
 export function Principale() {
   return (
     <IonReactRouter>
@@ -16,6 +18,9 @@ export function Principale() {
           {/* <Redirect exact path="/prin" to="/home" /> */}
 
           <Route path="/accueil" render={() => <Accueil />} exact={true} />
+          <Route path="/new_annonce" render={() => <New_annonce />} exact={true} />
+          <Route path="/mes_favoris" render={() => <Favoris />} exact={true} />
+
           {/* <Route path="/radio" render={() => <RadioPage />} exact={true} />
           <Route path="/library" render={() => <LibraryPage />} exact={true} />
           <Route path="/search" render={() => <SearchPage />} exact={true} /> */}
@@ -36,7 +41,7 @@ export function Principale() {
             {/* <IonLabel>Mes Annonces</IonLabel> */}
           </IonTabButton>
 
-          <IonTabButton className="tab-menu-button"  tab="annonce" href="/annonce">
+          <IonTabButton className="tab-menu-button"  tab="new_annonce" href="/new_annonce">
             <IonIcon icon={addCircleOutline} />
             {/* <IonLabel>Annonce</IonLabel> */}
           </IonTabButton>

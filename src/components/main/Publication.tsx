@@ -7,9 +7,9 @@ import '../../assets/css/publication.css';
 
 import Carousel from './Carousel';
 
-export default function Publication({marque,modele,auteur,image}) {
+export default function Publication({marque,modele,auteur,image,isFav}) {
 
-    const [fav,setFav] = useState(0);
+    const [fav,setFav] = useState(isFav);
     const [icon_src,setIcon_src] = useState(starOutline);
 
     function add_favorite() {
@@ -19,17 +19,25 @@ export default function Publication({marque,modele,auteur,image}) {
         
     }
 
+    useEffect(()=>{
+        if (fav==true) {
+            setIcon_src(star);
+        }else{
+            setIcon_src(starOutline);
+        }
+    });
+
     function perform() {
         
-        if (fav==0) {
+        if (fav==false) {
             add_favorite();
             setIcon_src(star);
-            setFav(1);
+            setFav(true);
 
         }else{
             remove_favorite();
             setIcon_src(starOutline);
-            setFav(0);
+            setFav(false);
         }
       
     }
