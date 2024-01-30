@@ -28,7 +28,8 @@ return (
         modules={[Pagination]}
       >
         {image!==null && image.map((img:string,ind:number) =>(
-      <SwiperSlide><img src={mercedes}/>
+      <SwiperSlide key={ind}>
+        <img style={{width:"100%",height:"100%"}} src={logo}/>
       </SwiperSlide>
               
     )
