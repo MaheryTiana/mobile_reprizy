@@ -5,11 +5,11 @@ import Publication from '../components/main/Publication';
 const Favoris: React.FC = () => {
   return (
     <IonPage>
-        <My_header titre="Repr'Izy"></My_header>
+        <My_header titre="Favoris"></My_header>
       <IonContent fullscreen>
-        <Publication isFav={true} key={0} marque="mercedes" modele="mercedes C63" auteur="Max" image={["img","img2"]} />
-        <Publication isFav={true} key={1} marque="mercedes" modele="mercedes C63" auteur="Max" image={["img","img2"]} />
-        <Publication isFav={true} key={2} marque="mercedes" modele="mercedes C63" auteur="Max" image={["img","img2"]} />
+        <Publication isFav={true} mine={false} key={0} marque="mercedes" modele="mercedes C63" auteur="Max" image={["img","img2"]} />
+        <Publication isFav={true} mine={false} key={1} marque="mercedes" modele="mercedes C63" auteur="Max" image={["img","img2"]} />
+        <Publication isFav={true} mine={false} key={2} marque="mercedes" modele="mercedes C63" auteur="Max" image={["img","img2"]} />
       </IonContent>
     </IonPage>
   );

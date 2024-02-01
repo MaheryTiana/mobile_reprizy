@@ -26,6 +26,8 @@ import Login_Register from './pages/Login_Register';
 import Landing from './pages/Landing';
 import {Principale} from './Principale';
 import "./global.css";
+import Details_annonce from './pages/Details_annonce';
+import Vente from './pages/Vente';
 
 setupIonicReact();
 
@@ -38,7 +40,7 @@ const App: React.FC = () => (
 
         </Route>
 
-        <Route exact path="/accueil">
+        <Route path="/main">
           <Principale/>
         </Route>
       
@@ -49,10 +51,14 @@ const App: React.FC = () => (
         <Route exact path="/logout">
           <Landing />
         </Route>
+        <Route path="/details_annonce/:id">
+          <Details_annonce />
+        </Route>
 
-        {/* <Route exact path="/">
-          <Login_Register />
-        </Route> */}
+        <Route path="/vente/:id">
+          <Vente />
+        </Route>
+        
         
 
       </IonRouterOutlet>

@@ -82,7 +82,27 @@
     padding: 5px;
   }
 
+  .details_row{
+    width: 100%;
+  }
 
-  .new_description{
-    margin-top: 5px;
+  .details_column1{
+    width: 45%;
+    float: left;
+  }
+  .details_column2{
+    width: 55%;
+    float: right;
+  }
+  .details_description{
+    width: 90%;
+    margin-left: 5%;
+    /* margin-top: 5px; */
+    background-color: rgb(234, 234, 234);
+    text-align: center;
+    color: black;
+  }
+
+  .details_description p {
+    padding: 2px;
   }
