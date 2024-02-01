@@ -4,23 +4,28 @@ import { IonReactRouter } from '@ionic/react-router';
 
 import { Route, Redirect } from 'react-router';
 
-import { listCircleOutline, add,addCircleOutline,personCircleOutline,notificationsOutline, starOutline} from 'ionicons/icons';
+import { listCircleOutline, add,addCircleOutline,personCircleOutline,notificationsOutline, starOutline, homeOutline} from 'ionicons/icons';
 
 import  "./assets/css/menu.scss";
 import Accueil from "./pages/Accueil";
 import New_annonce from './pages/New_annonce';
 import Favoris from './pages/Favoris';
+import Mes_annonces from './pages/Mes_annonces';
+import Profil from './pages/Profil';
+
 export function Principale() {
   return (
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
-          {/* <Redirect exact path="/prin" to="/home" /> */}
+          <Redirect exact path="/main" to="/main/accueil" />
 
-          <Route path="/accueil" render={() => <Accueil />} exact={true} />
-          <Route path="/new_annonce" render={() => <New_annonce />} exact={true} />
-          <Route path="/mes_favoris" render={() => <Favoris />} exact={true} />
-
+          <Route path="/main/accueil" render={() => <Accueil />} exact={true} />
+          <Route path="/main/new_annonce" render={() => <New_annonce />} exact={true} />
+          <Route path="/main/mes_favoris" render={() => <Favoris />} exact={true} />
+          <Route path="/main/mes_annonces" render={() => <Mes_annonces />} exact={true} /> 
+          <Route path="/main/profil" render={() => <Profil />} exact={true} />
+          
           {/* <Route path="/radio" render={() => <RadioPage />} exact={true} />
           <Route path="/library" render={() => <LibraryPage />} exact={true} />
           <Route path="/search" render={() => <SearchPage />} exact={true} /> */}
@@ -30,28 +35,29 @@ export function Principale() {
 
 
 
-        <IonTabButton className="tab-menu-button" tab="favoris" href="/mes_favoris">
+        <IonTabButton className="tab-menu-button" tab="favoris" href="/main/mes_favoris">
             <IonIcon icon={starOutline} />
             {/* <IonLabel>Mes Favoris</IonLabel> */}
           </IonTabButton>
 
 
-          <IonTabButton className="tab-menu-button" tab="annonces" href="/mes_annonces">
+          <IonTabButton className="tab-menu-button" tab="mes_annonces" href="/main/mes_annonces">
             <IonIcon icon={listCircleOutline} />
             {/* <IonLabel>Mes Annonces</IonLabel> */}
           </IonTabButton>
 
-          <IonTabButton className="tab-menu-button"  tab="new_annonce" href="/new_annonce">
+
+          <IonTabButton className="tab-menu-button"  tab="new_annonce" href="/main/new_annonce">
             <IonIcon icon={addCircleOutline} />
             {/* <IonLabel>Annonce</IonLabel> */}
           </IonTabButton>
-          
-          <IonTabButton  className="tab-menu-button"  tab="notification" href="/notification">
-            <IonIcon icon={notificationsOutline} />
-            {/* <IonLabel>Notifications</IonLabel> */}
-          </IonTabButton>
 
-          <IonTabButton  className="tab-menu-button"  tab="search" href="/search">
+          <IonTabButton  className="tab-menu-button"  tab="accueil" href="/main/accueil">
+            <IonIcon icon={homeOutline} />
+            {/* <IonLabel>Notifications</IonLabel> */}
+          </IonTabButton>          
+
+          <IonTabButton  className="tab-menu-button"  tab="profil" href="/main/profil">
             <IonIcon icon={personCircleOutline} />
             {/* <IonLabel>Profil</IonLabel> */}
           </IonTabButton>

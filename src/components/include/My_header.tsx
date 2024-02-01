@@ -1,6 +1,6 @@
 import {  IonButton, IonButtons, IonHeader, IonIcon, IonImg, IonLabel, IonTabBar, IonTabButton, IonTabs, IonTitle, IonToolbar } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import "./my_header.scss";
+import "../../assets/css/my_header.scss";
 import  logo from "../../assets/images/favicon_menu.png";
 
 import { logOutOutline} from 'ionicons/icons';
@@ -14,7 +14,9 @@ export function My_header({titre}) {
                 {/* <IonImg className="my_image"  src={logo} alt="logo"></IonImg> */}
                 <IonToolbar>
                     <IonButtons slot="start">
-                        <IonImg className="my_image"  src={logo} alt="logo"></IonImg>
+                        <a href="/main/accueil">
+                            <IonImg className="my_image"  src={logo} alt="logo"></IonImg>
+                        </a>
                     </IonButtons>
                         <center>
                         <IonTitle className="my_title">{titre}</IonTitle>

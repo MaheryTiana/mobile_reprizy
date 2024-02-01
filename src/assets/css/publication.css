@@ -1,6 +1,6 @@
 .card {
     width: 80%;
-    height: 500px;
+    height: 400px;
     background: rgb(210, 209, 209);
     padding: .4em;
     border-radius: 6px;
@@ -34,7 +34,7 @@
     font-weight: 600;
     color: rgb(88, 87, 87);
     padding: 7px;
-    width: 80%;
+    width: 60%;
     float: left;
   }
   .favorite{
@@ -59,7 +59,8 @@
   }
   
   .name {
-    font-weight: 600;
+    font-weight: 700;
+    font-size: medium;
   }
   
   .name:hover {
@@ -74,4 +75,8 @@
 
   .form_title{
     color:  var(--ion-color-tertiary);
+  }
+
+  .button_vendre{
+    float: right;
   }

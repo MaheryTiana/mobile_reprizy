@@ -75,7 +75,7 @@ const New_annonce: React.FC = () => {
         get_transmission();
         get_energie();
         get_etat();
-    });
+    },[]);
 
 
 
@@ -133,17 +133,15 @@ const New_annonce: React.FC = () => {
 
 
 
-                <SwiperSlide>
+                <SwiperSlide key={1}>
                 {images !==null && images.length!==0 ?(
-                //    <div className="image_container">
-                      
-                //    </div>
+
                     <div className="image_container">                   
                         <Carousel image={images}/>                       
                     </div>
                 ):(
                     <>
-                    <button onClick={()=>{take_many();}}  >
+                    <button type='button' onClick={()=>{take_many();}}  >
                         <div className="take_container"> 
                             <div className="take_header"> 
                                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> 
@@ -166,10 +164,9 @@ const New_annonce: React.FC = () => {
                             </div>
                             {
                                 categorie.map((cat,ind)=>(
-                                    <IonSelectOption value="apple">{cat}</IonSelectOption>
+                                    <IonSelectOption key={ind} value={cat}>{cat}</IonSelectOption>
                                 ))
                             }
-                            
                             </IonSelect>
                         </IonItem>
 
@@ -181,7 +178,7 @@ const New_annonce: React.FC = () => {
 
                             {
                                 type.map((tp,ind)=>(
-                                    <IonSelectOption value="apple">{tp}</IonSelectOption>
+                                    <IonSelectOption key={ind} value={tp}>{tp}</IonSelectOption>
                                 ))
                             }
                             
@@ -196,7 +193,7 @@ const New_annonce: React.FC = () => {
                             </div>
                             {
                                 marque.map((mq,ind)=>(
-                                    <IonSelectOption value="apple">{mq}</IonSelectOption>
+                                    <IonSelectOption key={ind} value={mq}>{mq}</IonSelectOption>
                                 ))
                             }
                             </IonSelect>
@@ -209,7 +206,7 @@ const New_annonce: React.FC = () => {
                             </div>
                             {
                                 modele.map((md,ind)=>(
-                                    <IonSelectOption value="apple">{md}</IonSelectOption>
+                                    <IonSelectOption key={ind} value={md}>{md}</IonSelectOption>
                                 ))
                             }
                             </IonSelect>
@@ -223,7 +220,7 @@ const New_annonce: React.FC = () => {
                 </SwiperSlide>
 
 
-                <SwiperSlide>
+                <SwiperSlide key={2}>
 
                 <div className='slide2_contains'>
                     <IonList>
@@ -234,7 +231,7 @@ const New_annonce: React.FC = () => {
                             </div>
                             {
                                 transmission.map((trs,ind)=>(
-                                    <IonSelectOption value="apple">{trs}</IonSelectOption>
+                                    <IonSelectOption key={ind} value={trs}>{trs}</IonSelectOption>
                                 ))
                             }
                             </IonSelect>
@@ -247,7 +244,7 @@ const New_annonce: React.FC = () => {
                             </div>
                             {
                                 energie.map((eg,ind)=>(
-                                    <IonSelectOption value="apple">{eg}</IonSelectOption>
+                                    <IonSelectOption key={ind} value={eg}>{eg}</IonSelectOption>
                                 ))
                             }
                             </IonSelect>
@@ -261,56 +258,47 @@ const New_annonce: React.FC = () => {
                             </div>
                             {
                                 etat.map((et,ind)=>(
-                                    <IonSelectOption value="apple">{et}</IonSelectOption>
+                                    <IonSelectOption key={ind} value={et}>{et}</IonSelectOption>
                                 ))
                             }
                             </IonSelect>
                         </IonItem>
 
-                        <IonInput name='annee' className='slide2_item' style={{width:"92%",marginLeft:"5%"}} label="Année" type="number" min={0} max={3000}></IonInput>
-                        <IonInput name='place' className='slide2_item' style={{width:"92%",marginLeft:"5%"}} label="Nombre de place" type="number" min={0}></IonInput>
-                        <IonInput name='kilometrage' className='slide2_item' style={{width:"92%",marginLeft:"5%"}} label="Kilometrage" type="number" min={0}></IonInput>
-                        <IonInput name='prix' className='slide2_item' style={{width:"92%",marginLeft:"5%"}} label="Prix" type="number" min={0}></IonInput>
+                        <IonInput name='annee' className='slide2_item' style={{width:"92%",marginLeft:"5%"}} label="Année" type="number" min={0} max={3000} placeholder="Tapez pour ecrire"></IonInput>
+                        <IonInput name='place' className='slide2_item' style={{width:"92%",marginLeft:"5%"}} label="Nombre de place" type="number" min={0} placeholder="Tapez pour ecrire"></IonInput>
+                        <IonInput name='kilometrage' className='slide2_item' style={{width:"92%",marginLeft:"5%"}} label="Kilometrage" type="number" min={0} placeholder="Tapez pour ecrire"></IonInput>
+                        <IonInput name='prix' className='slide2_item' style={{width:"92%",marginLeft:"5%"}} label="Prix" type="number" min={0} placeholder="Tapez pour ecrire"></IonInput>
                         
-                        <IonTextarea
-                            label="Description"
-                            labelPlacement="floating"
-                            fill="outline"
-                            placeholder="Tapez pour ecrire"
-                        ></IonTextarea>
+                        
                     </IonList>
                 </div>
 
                 </SwiperSlide>
 
-                <SwiperSlide>
+                <SwiperSlide key={3} className='slide3_contains'>
                     <IonList>
                         <IonItem >
 
                             <div style={{width:'100%', height:'70px'}}>
-                                <h4 className='annonce_title'>Details Specifique : </h4>
+                                <h4 className='annonce_title'>Description : </h4>
                             </div>
                         </IonItem>
-                        <div>
+                        
+
+                        <div className='new_description'>
                         <IonItem >
                         
-                            <div style={{width:'50%',float:'left'}}>
-                                
-                                <IonInput  className='slide2_item' name='libelles' labelPlacement="stacked" style={{width:"92%",marginLeft:"5%"}} label="Libelle" type="text"/>
-                                
-                            </div>
-                            <div style={{width:'50%',float:'right'}}>
-                            
-                                <IonInput name='valeurs'  labelPlacement="stacked" style={{width:"92%",marginLeft:"5%"}} label="Valeur" type="text"/>
-                                
-                            </div>
+                            <IonTextarea
+                                label="Description"
+                                labelPlacement="floating"
+                                fill="outline"
+                                placeholder="Tapez pour ecrire"
+                            ></IonTextarea>
                         
                         </IonItem>
                         </div>
 
-                        <div id='contains_specifique'>
-                            <Container/>
-                        </div>
+
 
                         <center style={{marginTop:'30px'}}>
                             <IonButton color={"tertiary"} type="submit" >Poster</IonButton>
