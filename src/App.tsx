@@ -1,4 +1,5 @@
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route} from 'react-router-dom';
+import { useHistory } from "react-router";
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 
@@ -28,14 +29,20 @@ import {Principale} from './Principale';
 import "./global.css";
 import Details_annonce from './pages/Details_annonce';
 import Vente from './pages/Vente';
+import { useEffect } from 'react';
 
 setupIonicReact();
 
+
+
+
 const App: React.FC = () => (
+
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
         <Route exact path="/">
+
           <Landing />
 
         </Route>

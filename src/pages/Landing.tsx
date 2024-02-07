@@ -1,11 +1,20 @@
     import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonFooter, IonHeader, IonInput, IonMenu, IonMenuButton, IonPage, IonText, IonTitle, IonToolbar,withIonLifeCycle } from "@ionic/react";
     import  "../assets/css/Landing.css";
 
-    import React from "react";
+    import React, { useEffect } from "react";
     import { Started } from "../components/Landing/Started";
+import { useHistory } from "react-router";
     const Landing: React.FC = () =>{
 
-        
+        const histo = useHistory();
+        useEffect(()=>{
+          const token = localStorage.getItem('token');
+          if(!token){
+            histo.push('/');
+          }else{
+            histo.push('/main/accueil');
+          }
+        },[]);        
 
         return(
             
