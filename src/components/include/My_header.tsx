@@ -4,9 +4,14 @@ import "../../assets/css/my_header.scss";
 import  logo from "../../assets/images/favicon_menu.png";
 
 import { logOutOutline} from 'ionicons/icons';
+import { useHistory } from "react-router";
 
 export function My_header({titre}) {
-    
+    const histo = useHistory();
+    function logout(){
+        localStorage.clear();
+        histo.push('/logout');
+    }
     return(
         <IonHeader translucent={true}>
             <IonToolbar>
@@ -23,7 +28,7 @@ export function My_header({titre}) {
                         </center>
                     <IonButtons slot="end">
                         <a href="/logout">
-                            <IonButton  >
+                            <IonButton onClick={()=>{logout()}} >
                                 <IonIcon  icon={logOutOutline}></IonIcon>
                             </IonButton>
                         </a>
