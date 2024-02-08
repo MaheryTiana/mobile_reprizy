@@ -21,7 +21,7 @@ return (
       >
         {image!==null && image.map((img:string,ind:number) =>(
       <SwiperSlide key={ind}>
-        <img style={{width:"100%",height:"100%"}} src={mercedes}/>
+        <img style={{width:"100%",height:"100%"}} src={img}/>
       </SwiperSlide>
               
     )

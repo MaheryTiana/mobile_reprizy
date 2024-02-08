@@ -18,11 +18,15 @@ import 'swiper/css/navigation';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { Pagination, Navigation } from 'swiper/modules';
-import { addCircleOutline, removeCircleOutline } from 'ionicons/icons';
-import Container from '../components/annonce/Container';
+
+import My_url from '../My_url';
+import axios from 'axios';
+import { get } from "../axios_utils.js";
+import Loader from '../components/loader/Loader';
 
 const New_annonce: React.FC = () => {
 
+    const [loader,setLoader] = useState(true);
     const [images,setImages] = useState([]);
 
     const [categorie,setCategorie] = useState([]);
@@ -33,48 +37,31 @@ const New_annonce: React.FC = () => {
     const [energie,setEnergie] = useState([]);
     const [etat,setEtat] = useState([]);
 
-    function get_categorie() {
-        var data = ['Plaisir','Camion'];
-        setCategorie(data);
-    }
-    function get_type() {
-        var data = ['4*4','4*2'];
-        setType(data);
-    }
 
-    function get_marque() {
-        var data = ['Mercedes','AUdi'];
-        setMarque(data);
-    }
-
-    function get_modele() {
-        var data = ['C63', 'Maybach'];
-        setModele(data);
-    }
-
-    function get_transmission() {
-        var data = ['autom', 'manuelle'];
-        setTransmission(data);
-    }
-    
-    function get_energie() {
-        var data = ['essence', 'sans plomb'];
-        setEnergie(data);
-    }
-
-    function get_etat() {
-        var data = ['bon', 'moyen'];
-        setEtat(data);
-    }
 
     useEffect(()=>{
-        get_categorie();
-        get_type();
-        get_marque();
-        get_modele();
-        get_transmission();
-        get_energie();
-        get_etat();
+            // Assuming the `get` function is imported or available in scope
+
+            async function fetchData() {
+                try {
+                const url = My_url+"/Annonces/newAnnonce"; // Replace with your actual URL
+                const response = await get(url);
+                console.log("data mine : "+response.data.data[0]); // Access the data property of the response object
+                setCategorie(response.data.data[0]);
+                setMarque(response.data.data[1]);
+                setEtat(response.data.data[2]);
+                setEnergie(response.data.data[3]);
+                setModele(response.data.data[4]);
+                setTransmission(response.data.data[5]);
+                setType(response.data.data[6]);
+                setLoader(false);
+                } catch (error) {
+                console.error('There was an error fetching the data:', error);
+                }
+            }
+            
+            fetchData();
+
     },[]);
 
 
@@ -103,11 +90,13 @@ const New_annonce: React.FC = () => {
         const take_many = async () =>{
             const many =  await Camera.pickImages();
             var photo = many.photos;
+            var tab_img = [];
             for (let i = 0; i < photo.length; i++) {
                 var src = photo[i].webPath
                 console.log("many : "+src);
+                tab_img[i] = src;
             }
-            setImages(photo);
+            setImages(tab_img);
 
         };
     
@@ -117,6 +106,10 @@ const New_annonce: React.FC = () => {
     <IonPage>
         <My_header titre="Nouvelle Annonce"></My_header>
       <IonContent fullscreen>
+        {loader == true &&(
+        <>
+            <Loader/>
+            </>)}
         <form action="" method="post">
         <div className='form_card'>
 
@@ -158,27 +151,27 @@ const New_annonce: React.FC = () => {
                 <div className='slide1_contains'>
                     <IonList>
                         <IonItem className='slide1_item'>
-                            <IonSelect name='categorie' >
+                            <IonSelect name='idcategorie' >
                             <div slot="label">
                                 Categorie
                             </div>
                             {
                                 categorie.map((cat,ind)=>(
-                                    <IonSelectOption key={ind} value={cat}>{cat}</IonSelectOption>
+                                    <IonSelectOption key={ind} value={cat.id}>{cat.nom}</IonSelectOption>
                                 ))
                             }
                             </IonSelect>
                         </IonItem>
 
                         <IonItem className='slide1_item'>
-                            <IonSelect name='type' >
+                            <IonSelect name='idtype' >
                             <div slot="label">
                                 Type
                             </div>
 
                             {
                                 type.map((tp,ind)=>(
-                                    <IonSelectOption key={ind} value={tp}>{tp}</IonSelectOption>
+                                    <IonSelectOption key={ind} value={tp.id}>{tp.nom}</IonSelectOption>
                                 ))
                             }
                             
@@ -187,26 +180,26 @@ const New_annonce: React.FC = () => {
                         
 
                         <IonItem className='slide1_item'>
-                            <IonSelect name='marque' >
+                            <IonSelect name='idmarque' >
                             <div slot="label">
                                 Marque
                             </div>
                             {
                                 marque.map((mq,ind)=>(
-                                    <IonSelectOption key={ind} value={mq}>{mq}</IonSelectOption>
+                                    <IonSelectOption key={ind} value={mq.id}>{mq.nom}</IonSelectOption>
                                 ))
                             }
                             </IonSelect>
                         </IonItem>
 
                         <IonItem className='slide1_item'>
-                            <IonSelect name='modele' >
+                            <IonSelect name='idmodele' >
                             <div slot="label">
                                 Modele
                             </div>
                             {
                                 modele.map((md,ind)=>(
-                                    <IonSelectOption key={ind} value={md}>{md}</IonSelectOption>
+                                    <IonSelectOption key={ind} value={md.id}>{md.nom}</IonSelectOption>
                                 ))
                             }
                             </IonSelect>
@@ -225,26 +218,26 @@ const New_annonce: React.FC = () => {
                 <div className='slide2_contains'>
                     <IonList>
                         <IonItem className='slide2_item'>
-                            <IonSelect name='transmission' >
+                            <IonSelect name='idtransmission' >
                             <div slot="label">
                                 Transmission
                             </div>
                             {
                                 transmission.map((trs,ind)=>(
-                                    <IonSelectOption key={ind} value={trs}>{trs}</IonSelectOption>
+                                    <IonSelectOption key={ind} value={trs.id}>{trs.nom}</IonSelectOption>
                                 ))
                             }
                             </IonSelect>
                         </IonItem>
 
                         <IonItem className='slide2_item'>
-                            <IonSelect name='energie'  >
+                            <IonSelect name='idenergie'  >
                             <div slot="label">
                                 Energie
                             </div>
                             {
                                 energie.map((eg,ind)=>(
-                                    <IonSelectOption key={ind} value={eg}>{eg}</IonSelectOption>
+                                    <IonSelectOption key={ind} value={eg.id}>{eg.nom}</IonSelectOption>
                                 ))
                             }
                             </IonSelect>
@@ -252,21 +245,21 @@ const New_annonce: React.FC = () => {
                         
 
                         <IonItem className='slide2_item'>
-                            <IonSelect name='etat' >
+                            <IonSelect name='idetat' >
                             <div slot="label">
                                 Etat du vehicule
                             </div>
                             {
                                 etat.map((et,ind)=>(
-                                    <IonSelectOption key={ind} value={et}>{et}</IonSelectOption>
+                                    <IonSelectOption key={ind} value={et.id}>{et.nom}</IonSelectOption>
                                 ))
                             }
                             </IonSelect>
                         </IonItem>
 
+                        <IonInput name='libelle' className='slide2_item' style={{width:"92%",marginLeft:"5%"}} label="Titre" type="text" placeholder="Tapez pour ecrire"></IonInput>
                         <IonInput name='annee' className='slide2_item' style={{width:"92%",marginLeft:"5%"}} label="Année" type="number" min={0} max={3000} placeholder="Tapez pour ecrire"></IonInput>
                         <IonInput name='place' className='slide2_item' style={{width:"92%",marginLeft:"5%"}} label="Nombre de place" type="number" min={0} placeholder="Tapez pour ecrire"></IonInput>
-                        <IonInput name='kilometrage' className='slide2_item' style={{width:"92%",marginLeft:"5%"}} label="Kilometrage" type="number" min={0} placeholder="Tapez pour ecrire"></IonInput>
                         <IonInput name='prix' className='slide2_item' style={{width:"92%",marginLeft:"5%"}} label="Prix" type="number" min={0} placeholder="Tapez pour ecrire"></IonInput>
                         
                         
@@ -293,6 +286,7 @@ const New_annonce: React.FC = () => {
                                 labelPlacement="floating"
                                 fill="outline"
                                 placeholder="Tapez pour ecrire"
+                                name='description'
                             ></IonTextarea>
                         
                         </IonItem>
