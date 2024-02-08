@@ -1,4 +1,4 @@
-import { IonButton, IonContent, IonItem, IonList, IonPage } from '@ionic/react';
+import { IonButton, IonContent, IonIcon, IonItem, IonList, IonPage } from '@ionic/react';
 
 import {My_header} from "../components/include/My_header";
 
@@ -19,14 +19,14 @@ import { useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 import My_url from '../My_url';
 import { get } from "../axios_utils.js";
-
+import Loader from '../components/loader/Loader';
 
 
 
 const Details_annonce: React.FC = () => {
-    const mine = false;
     const {id} = useParams();
-    
+    const [mine,setMine] = useState(false);
+    const [loader,setLoader] = useState(true);
     const [images,setImages] =useState([]) ;
     const [proprietaire,setProprietaire] = useState("");
     const [categorie,setCategorie] = useState("");
@@ -41,11 +41,31 @@ const Details_annonce: React.FC = () => {
     const [kilometrage,setKilometrage]= useState("");
     const [prix,setPrix] = useState("");
     const [description,setDescription] = useState("");
+
+
+    function perform() {
+        
+        // if (fav==false) {
+        //     add_favorite();
+        //     setIcon_src(star);
+        //     // setFav(true);
+
+        // }else{
+        //     remove_favorite();
+        //     setIcon_src(starOutline);
+        //     // setFav(false);
+        // } 
+    }
   useEffect(()=>{
     // Assuming the `get` function is imported or available in scope
-
+        if (fav==true) {
+            setIcon_src(star);
+        }else{
+            setIcon_src(starOutline);
+        }
     async function fetchData() {
         try {
+
         const url = My_url+"/Annonces/"+id; // Replace with your actual URL
         const response = await get(url);
         // console.log("data deteails.data : "+response.data.data[0].annee); // Access the data property of the response object
@@ -105,8 +125,17 @@ const Details_annonce: React.FC = () => {
         if (response.data.data[0].images) {
             setImages(response.data.data[0].images);
             
-        }//   setData(response.data.data);
-        // setLoader(false);
+        }
+        var user_str = localStorage.getItem('user');
+        var user = JSON.parse(user_str);
+        // var st 
+        
+        if (user.id === response.data.data[0].user.id) {
+            setMine(true);
+        }
+        console.log(mine);
+        //   setData(response.data.data);
+        setLoader(false);
         } catch (error) {
         console.error('There was an error fetching the data:', error);
         }
@@ -120,9 +149,13 @@ const Details_annonce: React.FC = () => {
     <IonPage>
         <My_header titre="Details Annonce"></My_header>
       <IonContent fullscreen>
-        
+      {loader==true && (<Loader/>) }
         <div className='form_card'>
-
+                <div className="favorite">
+                    <button /*onClick={()=>{perform()}}*/ style={{backgroundColor:'transparent'}}>
+                    {/* <IonIcon  className='favorite_icon' icon={icon_src} /> */}
+                    </button>
+                </div>
                 <>
             <Swiper
                 direction={'vertical'}

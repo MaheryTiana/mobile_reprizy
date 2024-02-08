@@ -5,6 +5,7 @@ import {My_header} from "../components/include/My_header";
 import Publication from '../components/main/Publication';
 import My_url from '../My_url';
 import { get } from "../axios_utils.js";
+import Loader from '../components/loader/Loader';
 
 const Accueil: React.FC = () => {
 
@@ -34,15 +35,17 @@ const Accueil: React.FC = () => {
     <IonPage>
         <My_header titre="Repr'Izy"></My_header>
       <IonContent fullscreen>
+        {loader==true&&(
+          <Loader/>
+        )}
         {data!==null && data.length !==0 ?(
           data.map((dt,ind)=>(
+            (dt[0].etatAnnonce !== 20 &&(
+              <Publication date = {dt[0].date} key={ind} marque={dt[0].marque.nom}
+              modele={dt[0].modele} auteur={dt[0].user.prenom +" "+dt[0].user.nom } 
+              image={dt[0].images} mine={false} titre={dt[0].libelle} id_pub = {dt[0].id } />
 
-            
-                          <Publication date = {dt[0].date} key={ind} marque={dt[0].marque.nom}
-                          modele={dt[0].modele} auteur={dt[0].user.prenom +" "+dt[0].user.nom } 
-                          image={dt[0].images} mine={false} titre={dt[0].libelle} id_pub = {dt[0].id } />
-            // (dt[0].etatAnnonce !== 20 &&(
-            // ))
+            ))
           )
         )):(
           <><p>NEANT</p></>

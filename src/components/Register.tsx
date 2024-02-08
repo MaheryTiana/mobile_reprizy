@@ -33,6 +33,7 @@ const Register: React.FC = () =>{
     }else{
       console.log(response.data.data);
       localStorage.setItem('token',response.data.data[1].token);
+      localStorage.setItem('user', response.data.data[1].user );
       histo.push('/');
     }
 

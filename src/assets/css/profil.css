@@ -32,7 +32,7 @@
   .profil_container{
     width: 90%;
     height: 15%;
-    margin-left: 5%;
+    margin-left: 20%;
     
 
   }
@@ -44,6 +44,7 @@
     height: 100%;
     color: grey;
     color: black;
+
   }
 
   .profil_content h4{

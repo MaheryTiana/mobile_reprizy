@@ -55,8 +55,10 @@ const Login: React.FC = () =>{
         setLoader(false);
         // alert(response.data.error);
       } else{
-        console.log('logged '+ response.data.data[1].token );
+        console.log('logged '+ response.data.data[0].id );
         localStorage.setItem('token', response.data.data[1].token );
+        localStorage.setItem('user', JSON.stringify(response.data.data[0]) );
+        
         setForm_data({
           username:'',
           mdp:''
