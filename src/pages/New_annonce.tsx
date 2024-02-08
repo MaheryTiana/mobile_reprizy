@@ -1,4 +1,4 @@
-import { IonButton, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonList, IonPage, IonSelect, IonSelectOption, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonList, IonPage, IonSelect, IonSelectOption, IonTextarea, IonTitle, IonToolbar,IonToast } from '@ionic/react';
 import { useEffect, useState } from 'react';
 import Import_photo from '../components/annonce/Import_photo';
 
@@ -21,14 +21,15 @@ import { Pagination, Navigation } from 'swiper/modules';
 
 import My_url from '../My_url';
 import axios from 'axios';
-import { get } from "../axios_utils.js";
+import { get ,post,handleChange} from "../axios_utils.js";
 import Loader from '../components/loader/Loader';
 
 const New_annonce: React.FC = () => {
-
+    const [base64URL, setBase64URL] = useState([]);
     const [loader,setLoader] = useState(true);
+    const [loader2,setLoader2] = useState(false);
     const [images,setImages] = useState([]);
-
+    const [message,setMessage] = useState("");
     const [categorie,setCategorie] = useState([]);
     const [type,setType] = useState([]);
     const [marque,setMarque] = useState([]);
@@ -36,6 +37,8 @@ const New_annonce: React.FC = () => {
     const [transmission,setTransmission] = useState([]);
     const [energie,setEnergie] = useState([]);
     const [etat,setEtat] = useState([]);
+    const [formData, setFormData] = useState(new FormData());
+
 
 
 
@@ -67,7 +70,7 @@ const New_annonce: React.FC = () => {
 
 
     //one
-    const takePicture = async () => {
+        const takePicture = async () => {
         const image = await Camera.getPhoto({
             quality: 90,
             allowEditing: true,
@@ -87,20 +90,82 @@ const New_annonce: React.FC = () => {
         
         };
         // many
-        const take_many = async () =>{
-            const many =  await Camera.pickImages();
-            var photo = many.photos;
-            var tab_img = [];
-            for (let i = 0; i < photo.length; i++) {
-                var src = photo[i].webPath
-                console.log("many : "+src);
-                tab_img[i] = src;
-            }
-            setImages(tab_img);
+        const getBase64 = async (url) => {
+            return new Promise((resolve, reject) => {
+              fetch(url)
+                .then(response => response.blob())
+                .then(blob => {
+                  let reader = new FileReader();
+                  reader.onloadend = () => resolve(reader.result);
+                  reader.onerror = reject;
+                  reader.readAsDataURL(blob);
+                })
+                .catch(reject);
+            });
+          };
 
-        };
+
+        const take_many = async () => {
+            const many = await Camera.pickImages();
+            const photos = many.photos;
+          
+            // Array to store base64 URLs
+            const base64URLs = [];
+          
+            for (let i = 0; i < photos.length; i++) {
+              const src = photos[i].webPath;
+              console.log("many : " + src);
+          
+              try {
+                // Fetch base64 data for the image
+                const base64Data = await getBase64(src);
+                base64URLs.push(base64Data);
+              } catch (error) {
+                console.error("Error fetching base64 data:", error);
+              }
+            }
+          
+            // Set base64URL state
+            setBase64URL(base64URLs);
+          
+            // Set images state
+            const webPaths = photos.map(photo => photo.webPath);
+            setImages(webPaths);
+          };
+
+        const handleInput = (e) => {
+            handleChange(e, formData, setFormData);
+            // console.log(formData.values);
+        }
+
+        const handleSubmit = async (e)=>{
+            setLoader2(true);
+            e.preventDefault();
+            try {
+                // setLoader(true);
+                // setMessage("oke")
+                base64URL.forEach(url => {
+                    formData.append("images", url);
+                  });
+                formData.forEach((value, key) => {
+                    console.log(`${key}: ${value}`);
+                });
+                const response = await post(formData,setFormData,My_url+"/Annonces")
+                if (response.data.error != null) {
+                    setMessage(response.data.error);
+                    setLoader2(false);
+                }else{
+                    setMessage("ok be")
+                    setLoader2(false);
+                }
+                
+            } catch (error) {
+                
+            }
+        }
     
      
+
 
   return (
     <IonPage>
@@ -110,7 +175,7 @@ const New_annonce: React.FC = () => {
         <>
             <Loader/>
             </>)}
-        <form action="" method="post">
+        <form onSubmit={handleSubmit}>
         <div className='form_card'>
 
                 <>
@@ -151,7 +216,7 @@ const New_annonce: React.FC = () => {
                 <div className='slide1_contains'>
                     <IonList>
                         <IonItem className='slide1_item'>
-                            <IonSelect name='idcategorie' >
+                            <IonSelect onIonChange={handleInput} name='idcategorie' >
                             <div slot="label">
                                 Categorie
                             </div>
@@ -164,7 +229,7 @@ const New_annonce: React.FC = () => {
                         </IonItem>
 
                         <IonItem className='slide1_item'>
-                            <IonSelect name='idtype' >
+                            <IonSelect onIonChange={handleInput}  name='idtype' >
                             <div slot="label">
                                 Type
                             </div>
@@ -180,7 +245,7 @@ const New_annonce: React.FC = () => {
                         
 
                         <IonItem className='slide1_item'>
-                            <IonSelect name='idmarque' >
+                            <IonSelect onIonChange={handleInput} name='idmarque' >
                             <div slot="label">
                                 Marque
                             </div>
@@ -193,7 +258,7 @@ const New_annonce: React.FC = () => {
                         </IonItem>
 
                         <IonItem className='slide1_item'>
-                            <IonSelect name='idmodele' >
+                            <IonSelect onIonChange={handleInput} name='idmodele' >
                             <div slot="label">
                                 Modele
                             </div>
@@ -218,7 +283,7 @@ const New_annonce: React.FC = () => {
                 <div className='slide2_contains'>
                     <IonList>
                         <IonItem className='slide2_item'>
-                            <IonSelect name='idtransmission' >
+                            <IonSelect onIonChange={handleInput} name='idtransmission' >
                             <div slot="label">
                                 Transmission
                             </div>
@@ -231,7 +296,7 @@ const New_annonce: React.FC = () => {
                         </IonItem>
 
                         <IonItem className='slide2_item'>
-                            <IonSelect name='idenergie'  >
+                            <IonSelect onIonChange={handleInput} name='idenergie'  >
                             <div slot="label">
                                 Energie
                             </div>
@@ -245,7 +310,7 @@ const New_annonce: React.FC = () => {
                         
 
                         <IonItem className='slide2_item'>
-                            <IonSelect name='idetat' >
+                            <IonSelect onIonChange={handleInput} name='idetat' >
                             <div slot="label">
                                 Etat du vehicule
                             </div>
@@ -257,10 +322,10 @@ const New_annonce: React.FC = () => {
                             </IonSelect>
                         </IonItem>
 
-                        <IonInput name='libelle' className='slide2_item' style={{width:"92%",marginLeft:"5%"}} label="Titre" type="text" placeholder="Tapez pour ecrire"></IonInput>
-                        <IonInput name='annee' className='slide2_item' style={{width:"92%",marginLeft:"5%"}} label="Année" type="number" min={0} max={3000} placeholder="Tapez pour ecrire"></IonInput>
-                        <IonInput name='place' className='slide2_item' style={{width:"92%",marginLeft:"5%"}} label="Nombre de place" type="number" min={0} placeholder="Tapez pour ecrire"></IonInput>
-                        <IonInput name='prix' className='slide2_item' style={{width:"92%",marginLeft:"5%"}} label="Prix" type="number" min={0} placeholder="Tapez pour ecrire"></IonInput>
+                        <IonInput onIonChange={handleInput} name='libelle' className='slide2_item' style={{width:"92%",marginLeft:"5%"}} label="Titre" type="text" placeholder="Tapez pour ecrire"></IonInput>
+                        <IonInput onIonChange={handleInput} name='annee' className='slide2_item' style={{width:"92%",marginLeft:"5%"}} label="Année" type="number" min={0} max={3000} placeholder="Tapez pour ecrire"></IonInput>
+                        <IonInput onIonChange={handleInput} name='place' className='slide2_item' style={{width:"92%",marginLeft:"5%"}} label="Nombre de place" type="number" min={0} placeholder="Tapez pour ecrire"></IonInput>
+                        <IonInput onIonChange={handleInput} name='prix' className='slide2_item' style={{width:"92%",marginLeft:"5%"}} label="Prix" type="number" min={0} placeholder="Tapez pour ecrire"></IonInput>
                         
                         
                     </IonList>
@@ -296,6 +361,8 @@ const New_annonce: React.FC = () => {
 
                         <center style={{marginTop:'30px'}}>
                             <IonButton color={"tertiary"} type="submit" >Poster</IonButton>
+                            {message && <IonToast isOpen={true} message={message} duration={5000} color={'success'}/>}
+                             
                         </center>
 
 
