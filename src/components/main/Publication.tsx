@@ -39,9 +39,9 @@ export default function Publication({marque,modele,auteur,image,mine,titre,date,
         //     remove_favorite();
         //     setIcon_src(starOutline);
         //     // setFav(false);
-        // }
-      
+        // } 
     }
+
     return (
         
 <a href={link_det}   >
@@ -82,7 +82,7 @@ export default function Publication({marque,modele,auteur,image,mine,titre,date,
             </div>
             <div className="heading">
                 
-                <div className="name"> Publié : <span className="author"> {date_annonce(date)}</span></div>
+                <div className="name"> Publié le : <span className="author"> {date_annonce(date)}</span></div>
             </div>
             {/* <div className="favorite">
                 <button onClick={()=>{perform()}} style={{backgroundColor:'transparent'}}>

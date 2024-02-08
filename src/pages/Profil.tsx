@@ -2,13 +2,29 @@ import { IonContent, IonItem, IonList, IonPage } from '@ionic/react';
 import  mercedes from "../assets/images/mercedes.jpg";
 import {My_header} from "../components/include/My_header";
 import  "../assets/css/profil.css";
+import { useState } from 'react';
 const Profil: React.FC = () => {
     
-    const nbr_annonce = 20;
+    var user_str = localStorage.getItem('user');
+    console.log(user_str);
+    var user = JSON.parse(user_str);
+
+    const [nbr_annonce,setNbr_annonce] = useState(0);
+
+    if (user.annonce) {
+        setNbr_annonce(user.annonce);
+        
+    }
+    const [nbr_vente,setNbr_vente] = useState(0);
+
+    if (user.vente) {
+        setNbr_vente(user.vente);
+        
+    }
     const nbr_favoris = 5;
-    const nbr_vente = 2;
-    const email = 'max@gmail.com';
-    const image = mercedes;
+
+    const email = user.prenom + " "+user.nom;
+    const image = user.image;
     return (
         <IonPage>
             <My_header titre="Mon Profil"></My_header>
@@ -39,12 +55,12 @@ const Profil: React.FC = () => {
                                 <p>Ventes</p>
                             </center>
                         </div>
-                        <div className='profil_content'>
+                        {/* <div className='profil_content'>
                             <center>
                                 <h4>{nbr_favoris}</h4>
                                 <p>Favoris</p>
                             </center>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                         
