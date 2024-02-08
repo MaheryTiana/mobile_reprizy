@@ -33,6 +33,7 @@ export async function  post(formData,setFormData,url) {
 
 export async function get(url) {
     const token ='Bearer '+localStorage.getItem('token');
+    
         try {
             let config = {
                 method: 'GET',

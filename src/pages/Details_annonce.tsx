@@ -15,27 +15,107 @@ import 'swiper/css/navigation';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { Pagination, Navigation } from 'swiper/modules';
+import { useParams } from 'react-router';
+import { useEffect, useState } from 'react';
+import My_url from '../My_url';
+import { get } from "../axios_utils.js";
+
 
 
 
 const Details_annonce: React.FC = () => {
     const mine = false;
+    const {id} = useParams();
     
-    const images = ['image1','image2'];
-    const proprietaire = 'Max';
-    const categorie = "Camion";
-    const type = "6*6";
-    const marque = "Mercedes";
-    const modele = "1935";
-    const transmission = "manuelle";
-    const annee = 2010;
-    const place = 3;
-    const etat_vehicule = "Bon";
-    const energie = "Gasoil";
-    const kilometrage= 20000;
-    const prix = 54000;
-    const description = "Moteur : v6 bi-turbo , Echappement normal sans silencieux,Moteur : v6 bi-turbo , Echappement normal sans silencieux,Moteur : v6 bi-turbo , Echappement normal sans silencieux,"
-    // const description ="";
+    const [images,setImages] =useState([]) ;
+    const [proprietaire,setProprietaire] = useState("");
+    const [categorie,setCategorie] = useState("");
+    const [type,setType] = useState("");
+    const [marque,setMarque]= useState("");
+    const [modele,setModele] = useState("");
+    const [transmission,setTransmission] = useState("");
+    const [annee,setAnnee] = useState("");
+    const [place,setPlace] = useState("");
+    const [etat_vehicule,setEtat_vehicule] = useState("");
+    const [energie,setEnergie] = useState("");
+    const [kilometrage,setKilometrage]= useState("");
+    const [prix,setPrix] = useState("");
+    const [description,setDescription] = useState("");
+  useEffect(()=>{
+    // Assuming the `get` function is imported or available in scope
+
+    async function fetchData() {
+        try {
+        const url = My_url+"/Annonces/"+id; // Replace with your actual URL
+        const response = await get(url);
+        // console.log("data deteails.data : "+response.data.data[0].annee); // Access the data property of the response object
+        if (response.data.data[0].user.prenom) {
+            
+            setProprietaire(response.data.data[0].user.prenom+" "+response.data.data[0].user.nom);
+        }
+        if (response.data.data[0].cat) {
+            
+            setCategorie(response.data.data[0].cat.nom);
+        }
+        if (response.data.data[0].marque) {
+            
+            setMarque(response.data.data[0].marque.nom);
+        }
+        if (response.data.data[0].modele) {
+            
+            setModele(response.data.data[0].modele.nom);
+        }
+        if (response.data.data[0].annee) {
+            
+            setAnnee(response.data.data[0].annee);
+        }
+        
+        if (response.data.data[0].place) {
+            setPlace(response.data.data[0].place);
+            
+        }
+        if (response.data.data[0].kilometrique) {
+            setKilometrage(response.data.data[0].kilometrique);
+            
+        }
+        if (response.data.data[0].energie) {
+            setEnergie(response.data.data[0].energie.nom);
+            
+        }
+        if (response.data.data[0].prix) {
+            setPrix(response.data.data[0].prix);
+            
+        }
+        if (response.data.data[0].description) {
+            setDescription(response.data.data[0].description);
+            
+        }
+        if (response.data.data[0].transmission) {
+            setTransmission(response.data.data[0].transmission.nom);
+            
+        }
+        if (response.data.data[0].type) {
+            setType(response.data.data[0].type.nom);
+            
+        }
+        if (response.data.data[0].etatVehicule) {
+            setEtat_vehicule(response.data.data[0].etatVehicule.nom);
+            
+        }
+        if (response.data.data[0].images) {
+            setImages(response.data.data[0].images);
+            
+        }//   setData(response.data.data);
+        // setLoader(false);
+        } catch (error) {
+        console.error('There was an error fetching the data:', error);
+        }
+    }
+    
+    fetchData();
+
+},[]);
+
     return (
     <IonPage>
         <My_header titre="Details Annonce"></My_header>
