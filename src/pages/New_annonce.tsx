@@ -119,6 +119,8 @@ const New_annonce: React.FC = () => {
               try {
                 // Fetch base64 data for the image
                 const base64Data = await getBase64(src);
+                console.log("img"+[i]+"   "+base64Data);
+                
                 base64URLs.push(base64Data);
               } catch (error) {
                 console.error("Error fetching base64 data:", error);
@@ -139,24 +141,24 @@ const New_annonce: React.FC = () => {
         }
 
         const handleSubmit = async (e)=>{
-            setLoader2(true);
+            // setLoader2(true);
             e.preventDefault();
             try {
                 // setLoader(true);
                 // setMessage("oke")
                 base64URL.forEach(url => {
                     formData.append("images", url);
-                  });
+                });
                 formData.forEach((value, key) => {
                     console.log(`${key}: ${value}`);
                 });
                 const response = await post(formData,setFormData,My_url+"/Annonces")
                 if (response.data.error != null) {
-                    setMessage(response.data.error);
-                    setLoader2(false);
+                   setMessage(response.data.error);
+                   setLoader2(false);
                 }else{
-                    setMessage("ok be")
-                    setLoader2(false);
+                   setMessage("ok be")
+                  setLoader2(false);
                 }
                 
             } catch (error) {
