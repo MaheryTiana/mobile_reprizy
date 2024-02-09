@@ -18,11 +18,11 @@ export function Principale() {
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
-          <Redirect exact path="/main" to="/main/accueil" />
+          <Redirect exact path="/main" to="/main/mes_annonces" />
 
-          <Route path="/main/accueil" render={() => <Accueil />} exact={true} />
+          {/* <Route path="/main/accueil" render={() => <Accueil />} exact={true} /> */}
           <Route path="/main/new_annonce" render={() => <New_annonce />} exact={true} />
-          <Route path="/main/mes_favoris" render={() => <Favoris />} exact={true} />
+          {/* <Route path="/main/mes_favoris" render={() => <Favoris />} exact={true} /> */}
           <Route path="/main/mes_annonces" render={() => <Mes_annonces />} exact={true} /> 
           <Route path="/main/profil" render={() => <Profil />} exact={true} />
           
@@ -35,10 +35,10 @@ export function Principale() {
 
 
 
-        <IonTabButton className="tab-menu-button" tab="favoris" href="/main/mes_favoris">
+        {/* <IonTabButton className="tab-menu-button" tab="favoris" href="/main/mes_favoris">
             <IonIcon icon={starOutline} />
-            {/* <IonLabel>Mes Favoris</IonLabel> */}
-          </IonTabButton>
+            <IonLabel>Mes Favoris</IonLabel>
+          </IonTabButton> */}
 
 
           <IonTabButton className="tab-menu-button" tab="mes_annonces" href="/main/mes_annonces">
@@ -52,10 +52,10 @@ export function Principale() {
             {/* <IonLabel>Annonce</IonLabel> */}
           </IonTabButton>
 
-          <IonTabButton  className="tab-menu-button"  tab="accueil" href="/main/accueil">
+          {/* <IonTabButton  className="tab-menu-button"  tab="accueil" href="/main/accueil">
             <IonIcon icon={homeOutline} />
-            {/* <IonLabel>Notifications</IonLabel> */}
-          </IonTabButton>          
+            <IonLabel>Notifications</IonLabel>
+          </IonTabButton>           */}
 
           <IonTabButton  className="tab-menu-button"  tab="profil" href="/main/profil">
             <IonIcon icon={personCircleOutline} />

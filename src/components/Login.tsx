@@ -72,7 +72,7 @@ const Login: React.FC = () =>{
 
         setLoader(false);
         
-        histo.push('/main/accueil')
+        histo.push('/main/new_annonce')
       }
     } catch (error) {
       

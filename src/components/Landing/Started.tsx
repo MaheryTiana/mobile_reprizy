@@ -40,7 +40,8 @@ export function Started() {
                 </IonButton>
 
             <br />
-            <a href="https://reprizymilaybe.netlify.app/">
+            
+            <a href="https://main--reprizy.netlify.app/">
                 <IonButton style={{width:"100%"}}  >
                     <p >Voir site Web</p>
                 </IonButton>

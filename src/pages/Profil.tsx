@@ -2,29 +2,38 @@ import { IonContent, IonItem, IonList, IonPage } from '@ionic/react';
 import  mercedes from "../assets/images/mercedes.jpg";
 import {My_header} from "../components/include/My_header";
 import  "../assets/css/profil.css";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 const Profil: React.FC = () => {
     
-    var user_str = localStorage.getItem('user');
-    console.log(user_str);
-    var user = JSON.parse(user_str);
+    
+    
 
     const [nbr_annonce,setNbr_annonce] = useState(0);
-
-    if (user.annonce) {
-        setNbr_annonce(user.annonce);
-        
-    }
     const [nbr_vente,setNbr_vente] = useState(0);
+    const  [email,setEmail] = useState("");
+    const [image,setImage] = useState("");
 
-    if (user.vente) {
-        setNbr_vente(user.vente);
-        
-    }
-    const nbr_favoris = 5;
+    // const nbr_favoris = 5;
 
-    const email = user.prenom + " "+user.nom;
-    const image = user.image;
+    useEffect(()=>{
+        var user_str = localStorage.getItem('user');
+        console.log(user_str);
+        var user = JSON.parse(user_str);
+        setEmail(user.prenom + " "+user.nom);
+        setImage(user.image);
+        if (user.annonce) {
+            setNbr_annonce(user.annonce);
+            
+        }
+    
+        if (user.vente) {
+            setNbr_vente(user.vente);
+            
+        }
+    });
+
+    // const email = user.prenom + " "+user.nom;
+    // const image = user.image;
     return (
         <IonPage>
             <My_header titre="Mon Profil"></My_header>

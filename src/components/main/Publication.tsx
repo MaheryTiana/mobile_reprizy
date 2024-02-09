@@ -8,11 +8,12 @@ import '../../assets/css/publication.css';
 
 import Carousel from './Carousel';
 
-export default function Publication({marque,modele,auteur,image,mine,titre,date,id_pub}) {
+export default function Publication({marque,modele,auteur,image,mine,titre,date,id_pub,etat}) {
     const router = useHistory();
     // const [fav,setFav] = useState(isFav);
-    const [icon_src,setIcon_src] = useState(starOutline);
-    const etat = 1;
+    
+    const [output,setOutput] = useState("") ;
+
 
     const link_det = "/details_annonce/"+id_pub;
     function date_annonce(date){
@@ -21,26 +22,18 @@ export default function Publication({marque,modele,auteur,image,mine,titre,date,
     }
 
     useEffect(()=>{
-        // if (fav==true) {
-        //     setIcon_src(star);
-        // }else{
-        //     setIcon_src(starOutline);
-        // }
+        let str = "";
+        if (etat ===  0) {
+          str = "En attente";
+        } else if (etat ==10) {
+            str = "Validée";
+        } else if(etat ==20) {
+            str = "Vendue";
+        }
+    
+        setOutput(str);
     });
 
-    function perform() {
-        
-        // if (fav==false) {
-        //     add_favorite();
-        //     setIcon_src(star);
-        //     // setFav(true);
-
-        // }else{
-        //     remove_favorite();
-        //     setIcon_src(starOutline);
-        //     // setFav(false);
-        // } 
-    }
 
     return (
         
@@ -54,7 +47,7 @@ export default function Publication({marque,modele,auteur,image,mine,titre,date,
 
         <div className='pub_footer'>
             <div className="heading"> 
-                {modele}
+                {/* {modele} */}
                 <div className="author"> 
                 <span className="name">Etat :</span>
                 {etat===10 && (
@@ -77,8 +70,11 @@ export default function Publication({marque,modele,auteur,image,mine,titre,date,
         ):(
             <div className='pub_footer'>
             <div className="heading">
-                {modele}
-                <div className="name"> Auteur : <span className="author">{auteur}</span></div>
+                {/* {modele} */}
+                <div className="name"> 
+                etat : 
+                <span className='author'>{output}</span>
+                </div>
             </div>
             <div className="heading">
                 
