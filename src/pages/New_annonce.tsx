@@ -49,7 +49,7 @@ const New_annonce: React.FC = () => {
                 try {
                 const url = My_url+"/Annonces/newAnnonce"; // Replace with your actual URL
                 const response = await get(url);
-                console.log("data mine : "+response.data.data[0]); // Access the data property of the response object
+                console.log("data new annonce : "+response.data.data[0]); // Access the data property of the response object
                 setCategorie(response.data.data[0]);
                 setMarque(response.data.data[1]);
                 setEtat(response.data.data[2]);
@@ -142,7 +142,7 @@ const New_annonce: React.FC = () => {
             setLoader2(true);
             e.preventDefault();
             try {
-                // setLoader(true);
+                setLoader(true);
                 // setMessage("oke")
                 base64URL.forEach(url => {
                     formData.append("images", url);
@@ -150,13 +150,15 @@ const New_annonce: React.FC = () => {
                 formData.forEach((value, key) => {
                     console.log(`${key}: ${value}`);
                 });
-                const response = await post(formData,setFormData,My_url+"/Annonces")
+                const api_url = My_url+"/Annonces";
+                const response = await post(formData,setFormData,api_url);
+                setImages([]);
                 if (response.data.error != null) {
                     setMessage(response.data.error);
-                    setLoader2(false);
+                    setLoader(false);
                 }else{
-                    setMessage("ok be")
-                    setLoader2(false);
+                    setMessage("SUCCES")
+                    setLoader(false);
                 }
                 
             } catch (error) {
@@ -171,10 +173,12 @@ const New_annonce: React.FC = () => {
     <IonPage>
         <My_header titre="Nouvelle Annonce"></My_header>
       <IonContent fullscreen>
-        {loader == true &&(
+        {loader == true ?(
         <>
             <Loader/>
-            </>)}
+            </>):(
+
+            
         <form onSubmit={handleSubmit}>
         <div className='form_card'>
 
@@ -216,7 +220,7 @@ const New_annonce: React.FC = () => {
                 <div className='slide1_contains'>
                     <IonList>
                         <IonItem className='slide1_item'>
-                            <IonSelect onIonChange={handleInput} name='idcategorie' >
+                            <IonSelect onIonChange={handleInput} name='idcategorie' required>
                             <div slot="label">
                                 Categorie
                             </div>
@@ -229,7 +233,7 @@ const New_annonce: React.FC = () => {
                         </IonItem>
 
                         <IonItem className='slide1_item'>
-                            <IonSelect onIonChange={handleInput}  name='idtype' >
+                            <IonSelect onIonChange={handleInput}  name='idtype'  required >
                             <div slot="label">
                                 Type
                             </div>
@@ -245,7 +249,7 @@ const New_annonce: React.FC = () => {
                         
 
                         <IonItem className='slide1_item'>
-                            <IonSelect onIonChange={handleInput} name='idmarque' >
+                            <IonSelect onIonChange={handleInput} name='idmarque' required >
                             <div slot="label">
                                 Marque
                             </div>
@@ -258,7 +262,7 @@ const New_annonce: React.FC = () => {
                         </IonItem>
 
                         <IonItem className='slide1_item'>
-                            <IonSelect onIonChange={handleInput} name='idmodele' >
+                            <IonSelect onIonChange={handleInput} name='idmodele' required >
                             <div slot="label">
                                 Modele
                             </div>
@@ -283,7 +287,7 @@ const New_annonce: React.FC = () => {
                 <div className='slide2_contains'>
                     <IonList>
                         <IonItem className='slide2_item'>
-                            <IonSelect onIonChange={handleInput} name='idtransmission' >
+                            <IonSelect onIonChange={handleInput} name='idtransmission' required >
                             <div slot="label">
                                 Transmission
                             </div>
@@ -296,7 +300,7 @@ const New_annonce: React.FC = () => {
                         </IonItem>
 
                         <IonItem className='slide2_item'>
-                            <IonSelect onIonChange={handleInput} name='idenergie'  >
+                            <IonSelect onIonChange={handleInput} name='idenergie' required >
                             <div slot="label">
                                 Energie
                             </div>
@@ -310,7 +314,7 @@ const New_annonce: React.FC = () => {
                         
 
                         <IonItem className='slide2_item'>
-                            <IonSelect onIonChange={handleInput} name='idetat' >
+                            <IonSelect onIonChange={handleInput} name='idetat'  required>
                             <div slot="label">
                                 Etat du vehicule
                             </div>
@@ -322,10 +326,11 @@ const New_annonce: React.FC = () => {
                             </IonSelect>
                         </IonItem>
 
-                        <IonInput onIonChange={handleInput} name='libelle' className='slide2_item' style={{width:"92%",marginLeft:"5%"}} label="Titre" type="text" placeholder="Tapez pour ecrire"></IonInput>
-                        <IonInput onIonChange={handleInput} name='annee' className='slide2_item' style={{width:"92%",marginLeft:"5%"}} label="Année" type="number" min={0} max={3000} placeholder="Tapez pour ecrire"></IonInput>
-                        <IonInput onIonChange={handleInput} name='place' className='slide2_item' style={{width:"92%",marginLeft:"5%"}} label="Nombre de place" type="number" min={0} placeholder="Tapez pour ecrire"></IonInput>
-                        <IonInput onIonChange={handleInput} name='prix' className='slide2_item' style={{width:"92%",marginLeft:"5%"}} label="Prix" type="number" min={0} placeholder="Tapez pour ecrire"></IonInput>
+                        <IonInput required  onIonChange={handleInput} name='libelle' className='slide2_item' style={{width:"92%",marginLeft:"5%"}} label="Titre" type="text" placeholder="Tapez pour ecrire"></IonInput>
+                        <IonInput required onIonChange={handleInput} name='annee' className='slide2_item' style={{width:"92%",marginLeft:"5%"}} label="Année" type="number" min={0} max={3000} placeholder="Tapez pour ecrire"></IonInput>
+                        <IonInput required onIonChange={handleInput} name='place' className='slide2_item' style={{width:"92%",marginLeft:"5%"}} label="Nombre de place" type="number" min={0} placeholder="Tapez pour ecrire"></IonInput>
+                        <IonInput required onIonChange={handleInput} name='prix' className='slide2_item' style={{width:"92%",marginLeft:"5%"}} label="Prix" type="number" min={0} placeholder="Tapez pour ecrire"></IonInput>
+                        <IonInput required onIonChange={handleInput} name='kilometrique' className='slide2_item' style={{width:"92%",marginLeft:"5%"}} label="Tableau KM" type="number" min={0} placeholder="Tapez pour ecrire"></IonInput>
                         
                         
                     </IonList>
@@ -352,6 +357,9 @@ const New_annonce: React.FC = () => {
                                 fill="outline"
                                 placeholder="Tapez pour ecrire"
                                 name='description'
+                                required
+
+                                onIonChange={handleInput}
                             ></IonTextarea>
                         
                         </IonItem>
@@ -378,7 +386,7 @@ const New_annonce: React.FC = () => {
 
         </div>
         </form>           
-        
+        )}
       </IonContent>
     </IonPage>
   );

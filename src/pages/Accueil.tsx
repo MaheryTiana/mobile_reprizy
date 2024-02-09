@@ -19,8 +19,19 @@ const Accueil: React.FC = () => {
         try {
         const url = My_url+"/Annonces"; // Replace with your actual URL
         const response = await get(url);
-        console.log("data acceuim.data : "+response.data.data); // Access the data property of the response object
-          setData(response.data.data);
+        console.log(response); // Access the data property of the response object
+        console.log(response.data.data[0]);
+        
+        setData(response.data.data[0]);
+        for (let i = 0; i < data.length; i++) {
+          let temp = response.data.data[i];
+          console.log('====================================');
+          console.log(JSON.stringify(temp));
+          
+          console.log(" data : "+temp+"/ "+data.length);
+          console.log('====================================');
+          
+        }
         setLoader(false);
         } catch (error) {
         console.error('There was an error fetching the data:', error);
@@ -40,12 +51,14 @@ const Accueil: React.FC = () => {
         )}
         {data!==null && data.length !==0 ?(
           data.map((dt,ind)=>(
-            (dt[0].etatAnnonce !== 20 &&(
-              <Publication date = {dt[0].date} key={ind} marque={dt[0].marque.nom}
-              modele={dt[0].modele} auteur={dt[0].user.prenom +" "+dt[0].user.nom } 
-              image={dt[0].images} mine={false} titre={dt[0].libelle} id_pub = {dt[0].id } />
+            (dt.etatAnnonce !== 20 &&(
+              
+              <Publication date = {dt.date} key={ind} marque={dt.marque.nom}
+              modele={"dt.modele"} auteur={dt.user.prenom +" "+dt.user.nom } 
+              image={dt.images} mine={false} titre={dt.libelle} id_pub = {dt.id } is_fav = {false}/>
 
             ))
+            // <p key={ind}>{dt.modele.nom}</p>
           )
         )):(
           <><p>NEANT</p></>

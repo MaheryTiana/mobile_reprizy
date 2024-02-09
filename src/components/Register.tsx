@@ -7,18 +7,23 @@ import  "../assets/css/Register.css";
 import {post,handleChange} from "../axios_utils.js";
 
 import My_url from "../My_url";
+import Loader from "./loader/Loader";
+
 const Register: React.FC = () =>{
 
   const [base64URL, setBase64URL] = useState("");
   const [formData, setFormData] = useState(new FormData());
   const [image,setImage] = useState('');
   const histo = useHistory();
-
+  const [loader,setLoader] = useState(false);
+  const [error,setError] = useState('');
 
   const handleInput = (e) => {
     handleChange(e, formData, setFormData);
 }
   const handleSubmit = async (e) => {
+    setLoader(true);
+
     e.preventDefault();
     formData.append("image", base64URL);
     formData.forEach((value, key) => {
@@ -30,11 +35,15 @@ const Register: React.FC = () =>{
 
     if (response.data.error) {
       console.log("register error  : "+response.data.error);
+      setError(response.data.error);
+      // console.log('Error request : '+ response.data.error );
+      setLoader(false);
     }else{
       console.log(response.data.data);
       localStorage.setItem('token',response.data.data[1].token);
-      localStorage.setItem('user', response.data.data[1].user );
-      histo.push('/');
+      localStorage.setItem('user', JSON.stringify(response.data.data[0]) );
+      setLoader(false);
+      histo.replace('/main');
     }
 
   }
@@ -118,8 +127,12 @@ const takePicture = async () => {
         <IonInput onIonChange={handleInput} name="username" style={{marginLeft:"10px"}} label="Email" type="text"></IonInput>
         <IonInput onIonChange={handleInput} name="mdp" style={{marginLeft:"10px"}} label="Mot de passe" type="password"></IonInput>
         
+        {loader && (<Loader/>) }
         <center style={{marginTop:'20px'}}>
             <IonButton color={"tertiary"}  type="submit">S'inscrire</IonButton>
+            {error !==''&&(
+              <p style={{color:'red'}}>{error}</p>
+            )}
         </center>
 
       

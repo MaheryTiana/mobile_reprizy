@@ -19,7 +19,7 @@ export function My_header({titre}) {
                 {/* <IonImg className="my_image"  src={logo} alt="logo"></IonImg> */}
                 <IonToolbar>
                     <IonButtons slot="start">
-                        <a href="/main/accueil">
+                        <a href="/main/new_annonce">
                             <IonImg className="my_image"  src={logo} alt="logo"></IonImg>
                         </a>
                     </IonButtons>

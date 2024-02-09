@@ -15,7 +15,7 @@ import 'swiper/css/navigation';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { Pagination, Navigation } from 'swiper/modules';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 import My_url from '../My_url';
 import { get } from "../axios_utils.js";
@@ -25,6 +25,7 @@ import Loader from '../components/loader/Loader';
 
 const Details_annonce: React.FC = () => {
     const {id} = useParams();
+    const [etat,setEtat] = useState(40);
     const [mine,setMine] = useState(false);
     const [loader,setLoader] = useState(true);
     const [images,setImages] =useState([]) ;
@@ -42,27 +43,14 @@ const Details_annonce: React.FC = () => {
     const [prix,setPrix] = useState("");
     const [description,setDescription] = useState("");
 
-
-    function perform() {
-        
-        // if (fav==false) {
-        //     add_favorite();
-        //     setIcon_src(star);
-        //     // setFav(true);
-
-        // }else{
-        //     remove_favorite();
-        //     setIcon_src(starOutline);
-        //     // setFav(false);
-        // } 
+    const histo = useHistory();
+    function go_vente() {
+        let url = '/vente/'+id;
+        histo.push(url);
     }
   useEffect(()=>{
     // Assuming the `get` function is imported or available in scope
-        if (fav==true) {
-            setIcon_src(star);
-        }else{
-            setIcon_src(starOutline);
-        }
+
     async function fetchData() {
         try {
 
@@ -126,6 +114,11 @@ const Details_annonce: React.FC = () => {
             setImages(response.data.data[0].images);
             
         }
+
+        if (response.data.data[0].etatAnnonce) {
+            setEtat(response.data.data[0].etatAnnonce);
+            
+        }
         var user_str = localStorage.getItem('user');
         var user = JSON.parse(user_str);
         // var st 
@@ -149,13 +142,10 @@ const Details_annonce: React.FC = () => {
     <IonPage>
         <My_header titre="Details Annonce"></My_header>
       <IonContent fullscreen>
-      {loader==true && (<Loader/>) }
+      {loader==true ? (<Loader/>):(
+
+      
         <div className='form_card'>
-                <div className="favorite">
-                    <button /*onClick={()=>{perform()}}*/ style={{backgroundColor:'transparent'}}>
-                    {/* <IonIcon  className='favorite_icon' icon={icon_src} /> */}
-                    </button>
-                </div>
                 <>
             <Swiper
                 direction={'vertical'}
@@ -305,15 +295,15 @@ const Details_annonce: React.FC = () => {
                         </IonItem>
 
 
-                        {mine === true ? (
+                        {etat === 10 ? (
                             <center style={{marginTop:'30px',padding:"20px"}}>
                                 
-                                <IonButton color={"tertiary"} type="submit" >Vendre</IonButton>
-                                <IonButton color={"danger"} type="submit" >Supprimer</IonButton>
+                                <IonButton color={"tertiary"}  onClick={go_vente}>Vendre</IonButton>
+                               
                             </center>
                         ):(
                             <center style={{marginTop:'30px',padding:"20px"}}>
-                                {/* <IonButton color={"tertiary"} type="submit" >Acheter</IonButton> */}
+                                <IonButton color={"tertiary"} type="disabled" ></IonButton>
                                 
                             </center>
                         )}
@@ -333,7 +323,7 @@ const Details_annonce: React.FC = () => {
 
         </div>
                   
-        
+                  ) }   
       </IonContent>
     </IonPage>
   );

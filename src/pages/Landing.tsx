@@ -11,8 +11,10 @@ import { useHistory } from "react-router";
           const token = localStorage.getItem('token');
           if(!token){
             histo.push('/');
+            // histo.replace('/')
           }else{
-            histo.push('/main/accueil');
+            // histo.push('/main/new_annonce');
+            histo.replace('/main/new_annonce');
           }
         },[]);        
 
